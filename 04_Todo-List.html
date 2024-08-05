@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Styling ===============================  -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+      .container {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #c3def7;
+      }
+      .content {
+        max-width: 400px;
+        max-height: 500px;
+        background: #000625;
+        color: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+      }
+      .content h1 {
+        font-size: 30px;
+      }
+      .content #input-area {
+        width: 100%;
+        border: none;
+        outline: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 10px;
+        margin: 20px auto;
+      }
+      .content #input-area:focus {
+        outline: 4px solid #92caff;
+      }
+      button {
+        padding: 10px 30px;
+        border: 0;
+        outline: 0;
+        border-radius: 10px;
+        color: rgb(255, 255, 255);
+        background: green;
+        margin-bottom: 20px;
+        cursor: pointer;
+        font-size: 15px;
+      }
+      ul li {
+        text-align: left;
+        list-style: none;
+        color: #000625;
+        background: #bac0d3;
+        font-size: 17px;
+        border-radius: 10px;
+        margin: 10px 0;
+        padding: 10px 20px 10px 30px;
+        position: relative;
+      }
+      #todo-list {
+        max-height: 16rem;
+        overflow: auto;
+        /* background: #ff0909; */
+        /* margin-bottom: 20px; */
+      }
+      .delete-btn {
+        margin: 0;
+        background: none;
+        color: #a80000;
+        text-align: right;
+        padding: 5px 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        position: absolute;
+        right: 10px;
+        top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Html =============================== -->
+    <div class="container">
+      <div class="content">
+        <h1>To-Do List</h1>
+        <input type="text" placeholder="Enter a new task" id="input-area" />
+        <button id="addButton">Add Task</button>
+        <ul id="todo-list"></ul>
+      </div>
+    </div>
+
+    <!-- Script  -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const todoInput = document.getElementById("input-area");
+        const addButton = document.getElementById("addButton");
+        const todoList = document.getElementById("todo-list");
+
+        // Function to add a new task
+        const addTask = () => {
+          const taskText = todoInput.value.trim();
+          if (taskText !== "") {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `<span>${taskText} </span>
+            <button class = "delete-btn">Delete</button`;
+            todoList.appendChild(listItem);
+            todoInput.value = ""; // Clear input field
+
+            // Add event listener to the delete button
+            listItem
+              .querySelector(".delete-btn")
+              .addEventListener("click", () => {
+                todoList.removeChild(listItem);
+              });
+          }
+        };
+        // Add task on button click
+        addButton.addEventListener("click", addTask);
+
+        // Add task on pressing 'Enter' key
+        todoInput.addEventListener("keypress", (event) => {
+          if (event.key === "Enter") {
+            addTask();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
